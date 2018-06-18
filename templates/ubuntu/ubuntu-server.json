@@ -65,6 +65,7 @@
             "ssh_password": "{{ user `ssh_password` }}",
             "ssh_username": "{{ user `ssh_username` }}",
             "ssh_timeout" : "10000s",
+            "switch_name":"{{user `hyperv_switchname`}}",
             "type": "hyperv-iso",
             "vm_name":"{{user `vm_name`}}"
         }
