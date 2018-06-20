@@ -4,11 +4,13 @@ SCRIPT_ROOT=$(dirname $0)
 
 mkdir -p "$SCRIPT_ROOT/bin"
 mkdir -p "$SCRIPT_ROOT/isos"
+mkdir -p "$SCRIPT_ROOT/bin/cdrtools"
 
 PACKER_VERSION='1.2.4'
 VAGRANT_VERSION='2.1.1'
-
 CENTOS_HASH_SIGNATURE='714acc0aefb32b7d51b515e25546835e55a90da9fb00417fbee2d03a62801efd'
+Z7='C:\Program Files\7-Zip\7z.exe'
+
 
 downloadPacker=0
 if [[ -f "$SCRIPT_ROOT/bin/packer.exe" ]]; then
@@ -26,5 +28,22 @@ if [[ "$downloadPacker" == "1" ]]; then
   rm "$SCRIPT_ROOT/bin/packer.zip"
 fi
 
-curl "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.msi" > "$SCRIPT_ROOT/bin/vagrant.msi"
-powershell -Command "msiexec /i (Resolve-Path \"$SCRIPT_ROOT/bin/vagrant.msi\")"
+downloadVagrant=0
+if [[ ! -z $(vagrant -v) ]]; then
+  if [[ "Vagrant $VAGRANT_VERSION" != "$(vagrant -v)" ]]; then
+    downloadVagrant=1
+  fi
+fi
+
+if [[ "$downloadVagrant" == "1" ]]; then
+  curl "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.msi" > "$SCRIPT_ROOT/bin/vagrant.msi"
+  powershell -Command "msiexec /i (Resolve-Path \"$SCRIPT_ROOT/bin/vagrant.msi\")"
+fi
+
+# curl "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" > "$SCRIPT_ROOT/bin/nuget.exe"
+
+#  ./bin/nuget.exe install Discutils -version 0.13.0-alpha -o lib
+
+curl "https://phoenixnap.dl.sourceforge.net/project/tumagcc/schily-cdrtools-3.02a05.7z" > "$SCRIPT_ROOT/bin/cdrtools.7z"
+cd "$SCRIPT_ROOT/bin/cdrtools"
+"$Z7" x "../cdrtools.7z"
