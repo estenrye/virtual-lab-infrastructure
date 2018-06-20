@@ -2,3 +2,5 @@ bin
 isos
 output*
 packer_cache
+preseed.iso
+packerlog.txt
