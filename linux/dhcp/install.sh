@@ -1,8 +1,10 @@
-#!/bin/sh
-sudo apt-get install isc-dhcp-server
-INTERFACES=eth0
-
-sudo sed -e 's/^#DHCPDv4_CONF=/DHCPDv4_CONF=/g' \
-    -e 's/^#DHCPDv4_PID=/DHCPDv4_PID=/g' \
-    -e "s/INTERFACESv4=\"\"/INTERFACESv4=\"${INTERFACES}\"/g" \
-    -i /etc/default/isc-dhcp-server
+#!/bin/bash
+export MSYS_NO_PATHCONV=1
+SCRIPT_ROOT=$(dirname $0)
+ssh packer@192.168.200.1 sudo apt-get install isc-dhcp-server
+scp $SCRIPT_ROOT/dhcpd.conf packer@192.168.200.1:~/dhcpd.conf
+scp $SCRIPT_ROOT/isc-dhcp-server packer@192.168.200.1:~/isc-dhcp-server
+ssh packer@192.168.200.1 'sudo cp ~/dhcpd.conf /etc/dhcp/dhcpd.conf'
+ssh packer@192.168.200.1 'sudo cp ~/isc-dhcp-server /etc/default/isc-dhcp-server'
+ssh packer@192.168.200.1 'sudo systemctl enable isc-dhcp-server'
+ssh packer@192.168.200.1 'sudo systemctl restart isc-dhcp-server'
