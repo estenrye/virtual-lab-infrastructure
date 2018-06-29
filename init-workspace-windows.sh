@@ -47,3 +47,5 @@ fi
 curl "https://phoenixnap.dl.sourceforge.net/project/tumagcc/schily-cdrtools-3.02a05.7z" > "$SCRIPT_ROOT/bin/cdrtools.7z"
 cd "$SCRIPT_ROOT/bin/cdrtools"
 "$Z7" x "../cdrtools.7z"
+
+git clone git@github.com:estenrye/packer-baseboxes.git

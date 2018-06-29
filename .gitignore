@@ -4,3 +4,4 @@ output*
 packer_cache
 preseed.iso
 packerlog.txt
+packer-baseboxes
