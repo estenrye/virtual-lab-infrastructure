@@ -59,13 +59,14 @@
                 "{{ user `iso_path` }}/{{ user `iso_name` }}",
                 "{{ user `iso_url` }}"
             ],
-            "mac_address":"0000deadbeef",
+            "mac_address":"00e510000001",
             "output_directory": "output-{{ user `vm_name` }}-hyperv-iso",
             "ram_size": "{{user `memory`}}",
             "shutdown_command": "echo 'packer' | sudo -S -E shutdown -P now",
+            "ssh_host":"builder.ryezone.lab",
             "ssh_password": "{{ user `ssh_password` }}",
             "ssh_username": "{{ user `ssh_username` }}",
-            "ssh_timeout" : "15m",
+            "ssh_timeout" : "20m",
             "switch_name":"{{user `hyperv_switchname`}}",
             "type": "hyperv-iso",
             "vm_name":"{{user `vm_name`}}"
